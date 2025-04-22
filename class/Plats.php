@@ -1,6 +1,5 @@
 <?php
 require_once 'Database.php';
-require_once 'Type_Plats.php';
 
 class Plats{
     private $ID_plat;
@@ -22,7 +21,7 @@ class Plats{
         $this->nom_plat = $nom_plat;
         $this->sur_la_carte = $sur_la_carte;
         $this->prix = $prix;
-        $this->type_plat = new Type_plats($type_plat);
+        $this->type_plat = $type_plat;
     }
 
     /**
@@ -71,7 +70,7 @@ class Plats{
           'ID_PLAT' => $this->getIDPlat(),
             'NOM_PLAT' => $this->getNomPlat(),
             'PRIX' => $this->getPrix(),
-            'TYPE_PLAT' => $this->getTypePlat()->toArray()
+            'TYPE_PLAT' => $this->getTypePlat()
         ];
     }
 
@@ -79,21 +78,59 @@ class Plats{
     {
 
         $db = new Database();
-        $conn = $db->getConnection();
         $query = "SELECT p.ID_PLAT, p.NOM_PLAT, p.PRIX, tp.TYPE_PLAT
           FROM PLAT p
           JOIN TYPE_PLATS tp ON p.ID_TYPE_PLATS = tp.ID_TYPE_PLATS
           WHERE p.SUR_LA_CARTE = TRUE AND tp.TYPE_PLAT = '$type'";
+        $conn = $db->getConnection();
         $stmt = $db->requete($query);
-        if (!$stmt) {
-            throw new Exception("Erreur dans la requête SQL");
-        }
+
         $plats = [];
         while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
             $plats[] = new Plats($row['ID_PLAT'], $row['NOM_PLAT'], true, $row['PRIX'], $row['TYPE_PLAT']);
         }
 
         return $plats;
+    }
+    public static function getPlatById($id) {
+        $db = new Database();
+        $query = "SELECT p.ID_PLAT, p.NOM_PLAT, p.PRIX, tp.TYPE_PLAT
+              FROM PLAT p
+              JOIN TYPE_PLATS tp ON p.ID_TYPE_PLATS = tp.ID_TYPE_PLATS
+              WHERE p.ID_PLAT = '$id'";
+
+        $conn = $db->getConnection();
+        $stmt = $db->requete($query);
+
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+            return new Plats($row['ID_PLAT'], $row['NOM_PLAT'], true, $row['PRIX'], $row['TYPE_PLAT']);
+    }
+
+    public static function updatePlat($id, $nom, $prix, $type) {
+        $db = new Database();
+        $conn = $db->getConnection();
+        $query = "UPDATE PLAT SET NOM_PLAT = '$nom', PRIX = '$prix', ID_TYPE_PLATS = (
+                      SELECT ID_TYPE_PLATS FROM TYPE_PLATS WHERE TYPE_PLAT = '$type'
+                  ) WHERE ID_PLAT = '$id'";
+        return $db->requete($query);
+
+    }
+
+    public static function createPlat($nom, $prix, $type) {
+        $db = new Database();
+        $conn = $db->getConnection();
+        $query = "INSERT INTO plat (NOM_PLAT, PRIX, ID_TYPE_PLATS) VALUES ('$nom', '$prix', (
+                      SELECT ID_TYPE_PLATS FROM TYPE_PLATS WHERE TYPE_PLAT = '$type'
+                  ))";
+        return $db->requete($query);
+    }
+
+    public static function updateSurLaCarte($id) {
+        $db = new Database();
+        $conn = $db->getConnection();
+        $query = "UPDATE PLAT SET SUR_LA_CARTE = 0 WHERE ID_PLAT = '$id'";
+
+        return $db->requete($query);
     }
 
 }

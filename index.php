@@ -22,6 +22,9 @@ switch ($page) {
     case 'parametre':
         require_once('controllers/administration/admin_Carte.php');
         break;
+    case 'modifier_carte':
+        require_once ('controllers/administration/admin_ModifierCarte.php');
+        break;
     default:
         echo "<h1>Page non trouvée</h1>";
         break;

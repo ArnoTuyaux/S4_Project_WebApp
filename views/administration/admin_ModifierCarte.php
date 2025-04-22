@@ -29,7 +29,7 @@
         const form = e.target;
         const formData = new FormData(form);
 
-        const endpoint = isAjout ? '../../api/create_plat.php' : '../../api/update_plat.php';
+        const endpoint = isAjout ? 'api/create_plat.php' : 'api/update_plat.php';
 
         const response = await fetch(endpoint, {
             method: 'POST',
@@ -38,7 +38,7 @@
 
         const result = await response.json();
 
-        alert(result.message); // ou modale/bulle si tu veux styliser
+        alert(result.message);
     });
 </script>
 

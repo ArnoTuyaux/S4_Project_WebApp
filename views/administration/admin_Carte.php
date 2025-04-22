@@ -1,12 +1,12 @@
 <body>
 <nav class="navbar">
-    <button class="back-btn">←</button>
+    <a href="?page=barmanAccueil"><button class="back-btn">←</button></a>
     <div class="nav-buttons">
-        <a href="?type=Entree"><button class="<?= ($_GET['type'] ?? 'Plats') === 'Entree' ? 'active' : '' ?>">ENTRÉES</button></a>
-        <a href="?type=Plat"><button class="<?= ($_GET['type'] ?? 'Plats') === 'Plat' ? 'active' : '' ?>">PLATS</button></a>
-        <a href="?type=Dessert"><button class="<?= ($_GET['type'] ?? 'Plats') === 'Dessert' ? 'active' : '' ?>">DESSERTS</button></a>
-        <a href="?type=Boisson"><button class="<?= ($_GET['type'] ?? 'Plats') === 'Boisson' ? 'active' : '' ?>">BOISSONS</button></a>
-        <a href="?type=Employe"><button class="<?= ($_GET['type'] ?? 'Plats') === 'Employe' ? 'active' : '' ?>">EMPLOYÉS</button></a>
+        <a href="?page=parametre&type=Entree"><button class="<?= ($_GET['type'] ?? 'Plats') === 'Entree' ? 'active' : '' ?>">ENTRÉES</button></a>
+        <a href="?page=parametre&type=Plat"><button class="<?= ($_GET['type'] ?? 'Plats') === 'Plat' ? 'active' : '' ?>">PLATS</button></a>
+        <a href="?page=parametre&type=Dessert"><button class="<?= ($_GET['type'] ?? 'Plats') === 'Dessert' ? 'active' : '' ?>">DESSERTS</button></a>
+        <a href="?page=parametre&type=Boisson"><button class="<?= ($_GET['type'] ?? 'Plats') === 'Boisson' ? 'active' : '' ?>">BOISSONS</button></a>
+        <a href="?page=parametre&type=Employe"><button class="<?= ($_GET['type'] ?? 'Plats') === 'Employe' ? 'active' : '' ?>">EMPLOYÉS</button></a>
     </div>
 </nav>
 <?php foreach ($plats as $plat): ?>
@@ -15,7 +15,7 @@
     <?= htmlspecialchars($plat['NOM_PLAT']) ?>
     - <?= number_format($plat['PRIX'], 2, ',', ' ') ?> €
 </span>
-	<a href="../../controllers/administration/admin_ModifierCarte.php?id=<?= $plat['ID_PLAT'] ?>"><button class="edit">Modifier</button></a>
+	<a href="?page=modifier_carte&id=<?= $plat['ID_PLAT'] ?>"><button class="edit">Modifier</button></a>
     <button class="delete" data-id="<?= $plat['ID_PLAT'] ?>">Supprimer</button>
 </div>
 
@@ -27,7 +27,7 @@
     </div>
 </div>
 <?php endforeach; ?>
-<a href="../../controllers/administration/admin_ModifierCarte.php">
+<a href="?page=modifier_carte">
 <button class="add">Ajouter</button>
 </a>
 

@@ -21,4 +21,4 @@ if (!$modeAjout) {
     ];
 }
 
-include("../../views/administration/admin_ModifierCarte.php");
+include("views/administration/admin_ModifierCarte.php");

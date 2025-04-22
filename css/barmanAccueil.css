@@ -1,0 +1,116 @@
+/*.table-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin: 200px;
+}*/
+
+.zones-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    gap: 40px;
+    height: 20%;
+    margin-top: 5%;
+    margin-left: 12%;
+    margin-right: 10%;
+}
+
+.zone {
+    border: none;
+    padding: 20px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: flex-start;
+    background-color: #430C05;
+    border-radius: 10px;
+    box-shadow: 2px 2px 10px rgba(0,0,0,0.1);
+}
+
+/* Titre du secteur */
+.zone h2 {
+    width: 100%;
+    text-align: center;
+    margin-bottom: 20px;
+    color: white;
+    font-size: 1.5rem;
+}
+
+/* Boutons de table */
+.table-btn {
+    padding: 12px 20px;
+    margin: 10px;
+    color: white;
+    border: none;
+    border-radius: 12px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+/* Couleurs selon statut */
+.table-btn[data-statut="Disponible"] {
+    background-color: gray;
+}
+.table-btn[data-statut="Occupee"] {
+    background-color: red;
+}
+.table-btn[data-statut="Reservee"] {
+    background-color: green;
+}
+.table-btn[data-statut="A Nettoyer"] {
+    background-color: orange;
+}
+
+/* Petits effets visuels */
+.table-btn:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 10px rgba(0,0,0,0.2);
+}
+
+.modal {
+    position: fixed;
+    top: 0;
+    margin-left: 20%;
+    z-index: 1000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-content {
+    background: #FFBF66;
+    padding: 20px;
+    border-radius: 10px;
+    min-width: 300px;
+    max-width: 600px;
+    position: relative;
+}
+
+.close {
+    position: absolute;
+    right: 15px;
+    top: 10px;
+    font-size: 24px;
+    cursor: pointer;
+}
+
+.autre-reservations {
+    display: flex;
+    gap: 10px;
+    margin-top: 10px;
+    flex-wrap: wrap;
+}
+
+.autre-btn {
+    background-color: #e6934b;
+    color: white;
+    padding: 8px;
+    border-radius: 6px;
+    border: none;
+    cursor: pointer;
+    white-space: pre-line;
+}
+
+

@@ -1,0 +1,6 @@
+.boisson-container {
+    margin-left: 10%;
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+}

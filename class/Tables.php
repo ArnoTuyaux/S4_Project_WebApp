@@ -33,8 +33,10 @@ class Tables
         $db = new Database();
         $conn = $db->getConnection();
         $sql = "SELECT t.ID_TABLES, s.statut_table, t.id_secteur
-                FROM tables t
-                JOIN statut_Table s ON t.ID_STATUT_TABLE = s.ID_STATUT_TABLE";
+        FROM tables t
+        JOIN statut_Table s ON t.ID_STATUT_TABLE = s.ID_STATUT_TABLE
+        ORDER BY t.ID_TABLES ASC";
+
         $stmt = $db->requete($sql);
 
         $tables = [];
@@ -43,5 +45,23 @@ class Tables
         }
 
         return $tables;
+    }
+
+    public static function setTablesReservees($listeIdTables) {
+        if (empty($listeIdTables)) return;
+
+        $db = new Database();
+        $conn = $db->getConnection();
+
+        // On transforme le tableau [1, 4, 5] en "(1,4,5)"
+        $placeholders = implode(',', array_map('intval', $listeIdTables));
+
+        $sql = "UPDATE tables 
+            SET ID_STATUT_TABLE = (
+                SELECT ID_STATUT_TABLE FROM statut_table WHERE statut_table = 'Reservee'
+            )
+            WHERE ID_TABLES IN ($placeholders)";
+
+        $conn->exec($sql);
     }
 }

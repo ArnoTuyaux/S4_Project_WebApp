@@ -9,4 +9,4 @@ if ($response === false) {
 }
 
 $plats = json_decode($response, true);
-include("../../views/administration/admin_Carte.php");
+include("views/administration/admin_Carte.php");

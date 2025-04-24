@@ -51,13 +51,13 @@ class Employes {
     {
         return [
             'ID_SERVEUR' => $this->getId(),
-            'NOM_COMPLET' => $this->getPrenom()
+            'NOM_COMPLET' => $this->getPrenom(),
         ];
     }
 
     public static function getAllEmployes() {
         $db = new Database();
-        $query = "SELECT ID_SERVEUR, NOM_COMPLET FROM serveur";
+        $query = "SELECT ID_SERVEUR, NOM_COMPLET FROM serveur WHERE EMPLOYE_ACTIF = 1";
         $conn = $db->getConnection();
         $stmt = $db->requete($query);
 
@@ -72,9 +72,19 @@ class Employes {
     public static function deleteEmployeById($id)
     {
         $db = new Database();
-        $query = "DELETE FROM serveur WHERE ID_SERVEUR = '$id'";
+        $query = "UPDATE serveur SET EMPLOYE_ACTIF = 0 WHERE ID_SERVEUR = '$id'";
         $conn = $db->getConnection();
         return $db->requete($query);
+    }
+
+    public static function getEmployeById($id)
+    {
+        $db = new Database();
+        $query = "SELECT * FROM serveur JOIN relier on relier.id_serveur = serveur.id_serveur WHERE serveur.id_serveur = '$id';";
+        $conn = $db->getConnection();
+        $stmt = $db->requete($query);
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+        return new Employes($row['ID_SERVEUR'], $row['NOM_COMPLET']);
     }
 
 }

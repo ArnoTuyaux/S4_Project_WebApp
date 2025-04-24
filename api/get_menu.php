@@ -1,6 +1,5 @@
 <?php
 require_once '../class/Plats.php';
-
 header('Content-Type: application/json');
 
 

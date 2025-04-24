@@ -193,6 +193,33 @@ if ($tables && is_array($tables)) {
         }
     });
 
+    // Bouton "Payer"
+    document.getElementById('payerBtn').addEventListener('click', function () {
+        const tableId = document.getElementById('tableNum').textContent;
+
+        const formData = new FormData();
+        formData.append('id_table', tableId);
+
+        fetch('http://localhost/Projet_S4/controllers/traitement_commande_payee.php', {
+            method: 'POST',
+            body: formData
+        })
+            .then(res => res.json())
+            .then(data => {
+                if (data.success) {
+                    alert("Commande payée !");
+                    location.reload();
+                } else {
+                    alert("Erreur : " + data.message);
+                }
+            })
+            .catch(err => {
+                console.error(err);
+                alert("Erreur lors du traitement.");
+            });
+    });
+
+
     // Fermeture des modales
     document.getElementById('closeModal').addEventListener('click', function() {
         document.getElementById('commandeModal').style.display = 'none';

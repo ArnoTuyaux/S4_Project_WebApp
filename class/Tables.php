@@ -53,7 +53,7 @@ class Tables
         $db = new Database();
         $conn = $db->getConnection();
 
-        // On transforme le tableau [1, 4, 5] en "(1,4,5)"
+        // On transformation d'un tableau [1, 4, 5] en "(1,4,5)"
         $placeholders = implode(',', array_map('intval', $listeIdTables));
 
         $sql = "UPDATE tables 
@@ -64,4 +64,23 @@ class Tables
 
         $conn->exec($sql);
     }
+
+    public static function setTableANettoyer($idTable)
+    {
+        $db = new Database();
+        $conn = $db->getConnection();
+
+        $sql = "
+        UPDATE tables 
+        SET ID_STATUT_TABLE = (
+            SELECT ID_STATUT_TABLE FROM statut_table WHERE statut_table = 'A nettoyer'
+        )
+        WHERE ID_TABLES = :idTable
+    ";
+
+        $stmt = $conn->prepare($sql);
+        return $stmt->execute(['idTable' => $idTable]);
+    }
+
+
 }

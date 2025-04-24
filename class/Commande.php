@@ -33,4 +33,21 @@ class Commande
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
+    public static function setCommandePayee($idTable)
+    {
+        $db = new Database();
+        $conn = $db->getConnection();
+
+        $sql = "
+        UPDATE commande 
+        SET COMMANDE_PAYEE = 1
+        WHERE ID_TABLES = :idTable AND COMMANDE_PAYEE = 0
+    ";
+
+        $stmt = $conn->prepare($sql);
+        return $stmt->execute(['idTable' => $idTable]);
+    }
+
+
+
 }

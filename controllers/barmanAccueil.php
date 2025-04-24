@@ -12,7 +12,7 @@ $ids = array_map(function($r) {
     return $r['ID_TABLES'];
 }, $reservations);
 
-Tables::setTablesReservees($ids);
+/*Tables::setTablesReservees($ids);*/
 
 include('views/layouts/nav.inc.php');
 include('views/modales/reservationModal.php');

@@ -29,6 +29,30 @@ if ($tables && is_array($tables)) {
     let toutesLesReservations = [];
     let reservationId = null; // ← Important ! pas touché
 
+    // D'abord on charge les deux datasets
+    let reservationsJour = [];
+    let tablesStatus = [];
+
+    Promise.all([
+        fetch('http://localhost/Projet_S4/api/get_reservations.php').then(res => res.json()),
+        fetch('http://localhost/Projet_S4/api/get_tables.php').then(res => res.json())
+    ]).then(([reservations, tables]) => {
+        reservationsJour = reservations;
+        tablesStatus = tables;
+
+        // On crée un Set des ID des tables "Disponible"
+        const tablesDisponibles = new Set(
+            tables.filter(t => t.statut_table === "Disponible").map(t => t.ID_TABLES)
+        );
+
+        // On filtre les réservations qui concernent des tables disponibles
+        const reservationsFiltrees = reservationsJour.filter(r => tablesDisponibles.has(parseInt(r.id_tables)));
+
+        // Puis tu peux continuer avec ton affichage ou traitement
+        afficherReservationsDisponibles(reservationsFiltrees);
+    });
+
+
     // Charger les commandes actives
     fetch('http://localhost/Projet_S4/api/get_commandes_actives.php')
         .then(res => res.json())

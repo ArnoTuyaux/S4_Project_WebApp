@@ -51,9 +51,7 @@ class Reservation {
         JOIN Tables t ON r.id_tables = t.id_tables
         WHERE r.date_reservation = CURRENT_DATE
           AND r.horaire >= CURRENT_TIME
-          AND t.ID_STATUT_TABLE = 3
-        ORDER BY r.id_tables ASC, r.horaire ASC
-        LIMIT 0, 25;
+
     ";
 
         $stmt = $db->requete($sql);

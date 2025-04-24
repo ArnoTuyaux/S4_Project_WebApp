@@ -82,5 +82,28 @@ class Tables
         return $stmt->execute(['idTable' => $idTable]);
     }
 
+    public static function getStatutsActuels() {
+        $db = new Database();
+        $conn = $db->getConnection();
+
+        $sql = "SELECT ID_TABLES, statut_table 
+            FROM tables 
+            JOIN statut_table ON tables.ID_STATUT_TABLE = statut_table.ID_STATUT_TABLE";
+
+        $stmt = $conn->prepare($sql);
+        $stmt->execute();
+
+        $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        $result = [];
+
+        foreach ($rows as $row) {
+            $result[$row['ID_TABLES']] = $row['statut_table'];
+        }
+
+        return $result;
+    }
+
+
+
 
 }

@@ -1,7 +1,15 @@
-<link rel="stylesheet" href="css/nav.css?v=3">
-<link rel="stylesheet" href="css/boissons.css">
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Boissons</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/nav.css?v=3">
+    <link rel="stylesheet" href="css/boissons.css?v=1">
 
-<h1>PAGE BOISSON</h1>
+</head>
+
+<body>
 
 <div class="boisson-container">
     <?php foreach ($boisson as $ticketId => $items): ?>
@@ -10,13 +18,11 @@
                 Table n°<?= htmlspecialchars($items['id_table']) ?>
             </div>
 
-
             <div class="boisson-contenu">
                 <?php foreach ($items as $key => $plat): ?>
                     <?php if ($key === 'id_table') continue; ?>
                     <p>x1 <?= htmlspecialchars($plat['NOM_PLAT']) ?></p>
                 <?php endforeach; ?>
-
             </div>
 
             <div class="boisson-footer">
@@ -28,3 +34,6 @@
         </div>
     <?php endforeach; ?>
 </div>
+
+</body>
+</html>

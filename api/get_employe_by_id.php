@@ -1,8 +1,7 @@
 <?php
 require_once '../class/Employes.php';
-
-if (isset($_GET['id'])) {
-    $id = intval($_GET['id']);
+$id = $_GET['id'] ?? null;
+if ($id) {
     $employe = Employes::getEmployeById($id);
 
     if ($employe) {

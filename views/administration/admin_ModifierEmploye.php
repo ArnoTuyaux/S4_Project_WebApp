@@ -1,36 +1,55 @@
 <!DOCTYPE html>
-<h2>Modifier un serveur</h2>
+<html>
+<head>
+    <title>Modifier un employé</title>
+    <link rel="stylesheet" href="css/admin_ModifierCarte.css">
+</head>
+<body>
 
-<form id="formModifierServeur">
-    <input type="hidden" name="ID_SERVEUR" value="<?= htmlspecialchars($serveur['ID_SERVEUR']) ?>">
+<form id="updateEmployeForm">
+    <input type="hidden" name="ID_SERVEUR" value="<?= htmlspecialchars($id) ?>">
 
-    <label>Nom (prénom)</label>
-    <input type="text" name="PRENOM" value="<?= htmlspecialchars($serveur['PRENOM']) ?>" required>
+    <div class="element">
+        <label>Nom complet</label>
+        <input type="text" name="NOM_COMPLET" value="<?= htmlspecialchars($nomComplet) ?>">
+    </div>
 
-    <label>Secteur attribué</label>
-    <input type="text" name="SECTEUR" value="<?= htmlspecialchars($serveur['SECTEUR'] ?? '') ?>">
+    <div class="element">
+        <label>Secteurs attribués :</label>
+        <?php foreach ($listeSecteurs as $idSecteur => $nomSecteur): ?>
+            <div>
+                <input type="checkbox"
+                       name="SECTEURS[]"
+                       value="<?= $idSecteur ?>"
+                    <?= in_array($idSecteur, $secteursAttribues) ? 'checked' : '' ?>>
+                <?= htmlspecialchars($nomSecteur) ?>
+            </div>
+        <?php endforeach; ?>
+    </div>
 
     <button type="submit">Enregistrer</button>
 </form>
 
 <script>
-    document.getElementById('formModifierServeur').addEventListener('submit', async function(e) {
+    document.getElementById('updateEmployeForm').addEventListener('submit', async function(e) {
         e.preventDefault();
 
-        const formData = new FormData(this);
+        const form = e.target;
+        const formData = new FormData(form);
 
-        const response = await fetch('http://localhost/Projet_S4/api/update_serveur.php', {
+        const response = await fetch('http://localhost/Projet_S4/api/update_employe.php', {
             method: 'POST',
             body: formData
         });
 
         const result = await response.json();
-
         if (result.success) {
-            alert('Serveur modifié avec succès');
-            window.location.href = '?page=admin_employes';
+            alert('Employé mis à jour !');
+            window.location.href = '?page=listeEmployes';
         } else {
             alert('Erreur : ' + result.message);
         }
     });
 </script>
+</body>
+</html>

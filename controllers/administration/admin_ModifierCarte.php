@@ -1,5 +1,4 @@
 <?php
-$types = ['Entree', 'Plat', 'Dessert', 'Boisson'];
 $id = $_GET['id'] ?? null;
 
 $modeAjout = ($id === null);
@@ -20,5 +19,5 @@ if (!$modeAjout) {
         'TYPE_PLAT' => ''
     ];
 }
-
+include ("views/administration/nav_inc.php");
 include("views/administration/admin_ModifierCarte.php");

@@ -10,7 +10,7 @@ class BoissonTicket
         $db = new Database();
         $conn = $db->getConnection();
 
-        $sql = "SELECT TICKET.ID_TICKET,COMMANDE.ID_TABLES AS ID_TABLE, PLAT.ID_PLAT, PLAT.NOM_PLAT, PLAT.PRIX, TYPE_PLATS.TYPE_PLAT
+        $sql = "SELECT TICKET.ID_TICKET,COMMANDE.ID_TABLES AS ID_TABLE, PLAT.ID_PLAT, PLAT.NOM_PLAT, PLAT.PRIX, PLAT.CONTIENT_SAUCE,PLAT.CONTIENT_CUISSON, TYPE_PLATS.TYPE_PLAT
                 FROM TICKET
                 JOIN COMMANDE ON TICKET.ID_COMMANDE = COMMANDE.ID_COMMANDE
                 JOIN ITEM ON TICKET.ID_TICKET = ITEM.ID_TICKET
@@ -27,7 +27,7 @@ class BoissonTicket
         while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
             $ticketId = $row['ID_TICKET'];
             $idTable = $row['ID_TABLE'];
-            $plat = new Plats($row['ID_PLAT'], $row['NOM_PLAT'], true, $row['PRIX'], $row['TYPE_PLAT']);
+            $plat = new Plats($row['ID_PLAT'], $row['NOM_PLAT'], true, $row['PRIX'], $row['TYPE_PLAT'],$row['CONTIENT_SAUCE'] ,$row['CONTIENT_CUISSON'] );
 
             if (!isset($result[$ticketId])) {
                 $result[$ticketId] = [

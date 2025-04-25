@@ -1,14 +1,10 @@
+<DOCTYPE html>
+<html>
+<head>
+    <title>Carte</title>
+</head>
 <body>
-<nav class="navbar">
-    <a href="?page=barmanAccueil"><button class="back-btn">←</button></a>
-    <div class="nav-buttons">
-        <a href="?page=parametre&type=Entree"><button class="<?= ($_GET['type'] ?? 'Plats') === 'Entree' ? 'active' : '' ?>">ENTRÉES</button></a>
-        <a href="?page=parametre&type=Plat"><button class="<?= ($_GET['type'] ?? 'Plats') === 'Plat' ? 'active' : '' ?>">PLATS</button></a>
-        <a href="?page=parametre&type=Dessert"><button class="<?= ($_GET['type'] ?? 'Plats') === 'Dessert' ? 'active' : '' ?>">DESSERTS</button></a>
-        <a href="?page=parametre&type=Boisson"><button class="<?= ($_GET['type'] ?? 'Plats') === 'Boisson' ? 'active' : '' ?>">BOISSONS</button></a>
-        <a href="?page=parametre&type=Employes"><button class="<?= ($_GET['type'] ?? 'Plats') === 'Employes' ? 'active' : '' ?>">EMPLOYÉS</button></a>
-    </div>
-</nav>
+<link rel="stylesheet" href="css/admin_carte.css">
 <?php foreach ($items as $item): ?>
     <div class="dish-item">
         <?php if (($type ?? '') === 'Employes'): ?>
@@ -31,11 +27,6 @@
 <button class="add">Ajouter</button>
 </a>
 
-<style>
-    .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.7); justify-content: center; align-items: center; }
-    .modal-content { background: white; padding: 20px; text-align: center; }
-    button { margin: 10px; }
-</style>
 
 <div id="confirmModal" class="modal">
     <div class="modal-content">

@@ -15,4 +15,5 @@ if ($response === false) {
 
 
 $items = json_decode($response, true);
+include ("views/administration/nav_inc.php");
 include("views/administration/admin_Carte.php");

@@ -1,35 +1,36 @@
-<link rel="stylesheet" href="css/nav.css?v=1">
-<link rel="stylesheet" href="css/barmanAccueil.css?v=1">
 
-<?php
-if ($tables && is_array($tables)) {
-    echo "<div class='zones-container'>";
+<link rel="stylesheet" href="css/nav.css?v=4">
+<link rel="stylesheet" href="css/barmanAccueil.css?v=2">
 
-    foreach ($zones as $zoneName => $ids) {
-        echo "<div class='zone'><h2>$zoneName</h2>";
-        foreach ($tables as $table) {
-            $id = $table['ID_TABLES'];
-            if (in_array($id, $ids)) {
-                $statut = $table['statut_table'];
+<body class="container">
+    <?php
+    if ($tables && is_array($tables)) {
+        echo "<div class='zones-container'>";
 
-                echo "<button class='table-btn' data-statut='$statut' data-id='$id'>Table $id</button>";
+        foreach ($zones as $zoneName => $ids) {
+            echo "<div class='zone'><h2>$zoneName</h2>";
+            foreach ($tables as $table) {
+                $id = $table['ID_TABLES'];
+                if (in_array($id, $ids)) {
+                    $statut = $table['statut_table'];
+
+                    echo "<button class='table-btn' data-statut='$statut' data-id='$id'>Table $id</button>";
+                }
             }
+            echo "</div>";
         }
+
         echo "</div>";
+    } else {
+        echo "Erreur lors du chargement des tables.";
     }
-
-    echo "</div>";
-} else {
-    echo "Erreur lors du chargement des tables.";
-}
-?>
-
+    ?>
+</body>
 <script>
     let commandesData = [];
     let toutesLesReservations = [];
     let reservationId = null; // ← Important ! pas touché
 
-    // D'abord on charge les deux datasets
     let reservationsJour = [];
     let tablesStatus = [];
 
@@ -48,10 +49,8 @@ if ($tables && is_array($tables)) {
         // On filtre les réservations qui concernent des tables disponibles
         const reservationsFiltrees = reservationsJour.filter(r => tablesDisponibles.has(parseInt(r.id_tables)));
 
-        // Puis tu peux continuer avec ton affichage ou traitement
         afficherReservationsDisponibles(reservationsFiltrees);
     });
-
 
     // Charger les commandes actives
     fetch('http://localhost/Projet_S4/api/get_commandes_actives.php')

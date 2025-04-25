@@ -103,7 +103,21 @@ class Tables
         return $result;
     }
 
+    public static function setTableDisponible($idTable)
+    {
+        if (!$idTable) return;
 
+        $db = new Database();
+        $conn = $db->getConnection();
 
+        $sql = "UPDATE tables 
+            SET ID_STATUT_TABLE = (
+                SELECT ID_STATUT_TABLE FROM statut_table WHERE statut_table = 'Disponible'
+            )
+            WHERE ID_TABLES = :id";
 
+        $stmt = $conn->prepare($sql);
+        $stmt->bindParam(':id', $idTable, PDO::PARAM_INT);
+        $stmt->execute();
+    }
 }

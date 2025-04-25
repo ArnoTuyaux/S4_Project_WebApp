@@ -1,4 +1,4 @@
-<link rel="stylesheet" href="css/nav.css?v=1">
+<link rel="stylesheet" href="css/nav.css?v=3">
 <link rel="stylesheet" href="css/boissons.css">
 
 <h1>PAGE BOISSON</h1>
@@ -7,13 +7,16 @@
     <?php foreach ($boisson as $ticketId => $items): ?>
         <div class="boisson-carte">
             <div class="boisson-header">
-                T°<?= htmlspecialchars($ticketId) ?>
+                Table n°<?= htmlspecialchars($items['id_table']) ?>
             </div>
 
+
             <div class="boisson-contenu">
-                <?php foreach ($items as $plat): ?>
+                <?php foreach ($items as $key => $plat): ?>
+                    <?php if ($key === 'id_table') continue; ?>
                     <p>x1 <?= htmlspecialchars($plat['NOM_PLAT']) ?></p>
                 <?php endforeach; ?>
+
             </div>
 
             <div class="boisson-footer">

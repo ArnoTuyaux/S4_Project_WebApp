@@ -1,31 +1,54 @@
 
 <link rel="stylesheet" href="css/nav.css?v=4">
-<link rel="stylesheet" href="css/barmanAccueil.css?v=2">
+<link rel="stylesheet" href="css/barmanAccueil.css?v=3">
 
 <body class="container">
-    <?php
-    if ($tables && is_array($tables)) {
-        echo "<div class='zones-container'>";
+<?php
+if ($tables && is_array($tables)) {
+    echo "<div class='zones-container'>";
 
-        foreach ($zones as $zoneName => $ids) {
-            echo "<div class='zone'><h2>$zoneName</h2>";
-            foreach ($tables as $table) {
-                $id = $table['ID_TABLES'];
-                if (in_array($id, $ids)) {
-                    $statut = $table['statut_table'];
+    foreach ($zones as $zoneName => $ids) {
+        echo "<div class='zone'><h2>$zoneName</h2>";
+        echo "<div class='zone-buttons'>";
 
-                    echo "<button class='table-btn' data-statut='$statut' data-id='$id'>Table $id</button>";
-                }
+        $tablesInZone = array_filter($tables, function($table) use ($ids) {
+            return in_array($table['ID_TABLES'], $ids);
+        });
+        $tablesInZone = array_values($tablesInZone); // réindexe l'array
+        $total = count($tablesInZone);
+
+        for ($i = 0; $i < $total; $i++) {
+            $table = $tablesInZone[$i];
+            $id = $table['ID_TABLES'];
+            $statut = $table['statut_table'];
+
+            // Si c'est le dernier ET qu'il est seul dans sa ligne
+            if ($i === $total - 1 && $total % 2 !== 0) {
+                echo "<div class='button-center'>";
+                echo "<button class='table-btn' data-statut='$statut' data-id='$id'>Table $id</button>";
+                echo "</div>";
+            } else {
+                // Nouvelle ligne tous les 2 boutons
+                if ($i % 2 === 0) echo "<div class='button-row'>";
+
+                echo "<button class='table-btn' data-statut='$statut' data-id='$id'>Table $id</button>";
+
+                if ($i % 2 === 1) echo "</div>";
             }
-            echo "</div>";
         }
 
-        echo "</div>";
-    } else {
-        echo "Erreur lors du chargement des tables.";
+        echo "</div>"; // .zone-buttons
+        echo "</div>"; // .zone
     }
-    ?>
+
+    echo "</div>"; // .zones-container
+} else {
+    echo "Erreur lors du chargement des tables.";
+}
+?>
 </body>
+
+
 <script>
     let commandesData = [];
     let toutesLesReservations = [];

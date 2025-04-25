@@ -53,7 +53,7 @@ class Tables
         $db = new Database();
         $conn = $db->getConnection();
 
-        // On transforme le tableau [1, 4, 5] en "(1,4,5)"
+        // On transformation d'un tableau [1, 4, 5] en "(1,4,5)"
         $placeholders = implode(',', array_map('intval', $listeIdTables));
 
         $sql = "UPDATE tables 
@@ -63,5 +63,61 @@ class Tables
             WHERE ID_TABLES IN ($placeholders)";
 
         $conn->exec($sql);
+    }
+
+    public static function setTableANettoyer($idTable)
+    {
+        $db = new Database();
+        $conn = $db->getConnection();
+
+        $sql = "
+        UPDATE tables 
+        SET ID_STATUT_TABLE = (
+            SELECT ID_STATUT_TABLE FROM statut_table WHERE statut_table = 'A nettoyer'
+        )
+        WHERE ID_TABLES = :idTable
+    ";
+
+        $stmt = $conn->prepare($sql);
+        return $stmt->execute(['idTable' => $idTable]);
+    }
+
+    public static function getStatutsActuels() {
+        $db = new Database();
+        $conn = $db->getConnection();
+
+        $sql = "SELECT ID_TABLES, statut_table 
+            FROM tables 
+            JOIN statut_table ON tables.ID_STATUT_TABLE = statut_table.ID_STATUT_TABLE";
+
+        $stmt = $conn->prepare($sql);
+        $stmt->execute();
+
+        $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        $result = [];
+
+        foreach ($rows as $row) {
+            $result[$row['ID_TABLES']] = $row['statut_table'];
+        }
+
+        return $result;
+    }
+
+    public static function setTableDisponible($idTable)
+    {
+        if (!$idTable) return;
+
+        $db = new Database();
+        $conn = $db->getConnection();
+
+        $sql = "UPDATE tables 
+            SET ID_STATUT_TABLE = (
+                SELECT ID_STATUT_TABLE FROM statut_table WHERE statut_table = 'Disponible'
+            )
+            WHERE ID_TABLES = :id";
+
+        $stmt = $conn->prepare($sql);
+        $stmt->bindParam(':id', $idTable, PDO::PARAM_INT);
+        $stmt->execute();
     }
 }

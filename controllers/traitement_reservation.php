@@ -24,10 +24,36 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $response['success'] = $success;
     }
 
-    if ($action === 'delete') {
+/*    if ($action === 'delete') {
         $id = $_POST['id'];
         $success = Reservation::deleteReservation($id);
         $response['success'] = $success;
+    }*/
+
+/*    if ($_POST['action'] === 'delete') {
+        $id = $_POST['id'];
+
+        $db = new Database();
+        $conn = $db->getConnection();
+        $stmt = $conn->prepare("SELECT id_tables FROM reservation WHERE id_reservation = :id");
+        $stmt->execute([':id' => $id]);
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+        $id_table = $result ? $result['id_tables'] : null;
+
+        $success = Reservation::deleteReservation($id);
+
+        if ($success && $id_table) {
+            Reservation::updateStatutTable($id_table, 1);
+        }
+
+        echo json_encode(['success' => $success]);
+        exit;
+    }*/
+
+    if ($_POST['action'] === 'delete') {
+        $success = Reservation::deleteReservationEtLibereTable($_POST['id']);
+        echo json_encode(['success' => $success]);
+        exit;
     }
 }
 

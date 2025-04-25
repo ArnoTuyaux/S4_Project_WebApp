@@ -12,7 +12,24 @@ $ids = array_map(function($r) {
     return $r['ID_TABLES'];
 }, $reservations);
 
-Tables::setTablesReservees($ids);
+
+// 1. On récupère les statuts actuels des tables via ta méthode ou API
+$statutsActuels = Tables::getStatutsActuels();
+
+$idsTablesAChanger = [];
+
+foreach ($ids as $idTable) {
+    if (isset($statutsActuels[$idTable]) && $statutsActuels[$idTable] === 'Disponible') {
+        $idsTablesAChanger[] = $idTable;
+    }
+}
+
+// 2. On ne met à jour que les tables vraiment disponibles
+if (!empty($idsTablesAChanger)) {
+    Tables::setTablesReservees($idsTablesAChanger);
+}
+
+
 
 include('views/layouts/nav.inc.php');
 include('views/modales/reservationModal.php');

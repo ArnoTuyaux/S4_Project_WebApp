@@ -3,8 +3,10 @@
         <span class="close-btn" id="closeModal">&times;</span>
         <h2>Commande de la table <span id="tableNum"></span></h2>
         <div id="commandeDetails">Chargement...</div>
+        <button id="payerBtn" class="btn btn-success">Commande payée</button>
     </div>
 </div>
+
 
 <!--<div id="reserveeModal" class="modal" style="display:none;">
     <div class="modal-content">

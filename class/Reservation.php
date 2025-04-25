@@ -51,9 +51,7 @@ class Reservation {
         JOIN Tables t ON r.id_tables = t.id_tables
         WHERE r.date_reservation = CURRENT_DATE
           AND r.horaire >= CURRENT_TIME
-          AND t.ID_STATUT_TABLE = 3
-        ORDER BY r.id_tables ASC, r.horaire ASC
-        LIMIT 0, 25;
+
     ";
 
         $stmt = $db->requete($sql);
@@ -93,9 +91,40 @@ class Reservation {
         return $stmt->execute([':id' => $id]);
     }
 
+    public static function updateStatutTable($id_table, $nouveau_statut) {
+        $db = new Database();
+        $conn = $db->getConnection();
 
+        $sql = "UPDATE Tables SET ID_STATUT_TABLE = :statut WHERE ID_TABLES = :id";
+        $stmt = $conn->prepare($sql);
+        return $stmt->execute([
+            ':statut' => $nouveau_statut,
+            ':id' => $id_table
+        ]);
+    }
 
+    public static function getTableIdFromReservation($id_reservation) {
+        $db = new Database();
+        $conn = $db->getConnection();
 
+        $sql = "SELECT id_tables FROM reservation WHERE id_reservation = :id";
+        $stmt = $conn->prepare($sql);
+        $stmt->execute([':id' => $id_reservation]);
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        return $result ? $result['id_tables'] : null;
+    }
+
+    public static function deleteReservationEtLibereTable($id_reservation) {
+        $id_table = self::getTableIdFromReservation($id_reservation);
+        $success = self::deleteReservation($id_reservation);
+
+        if ($success && $id_table) {
+            self::updateStatutTable($id_table, 1);
+        }
+
+        return $success;
+    }
 
 
     /*    fonction pas utilisé en dessous , car j'ai une autre solution */

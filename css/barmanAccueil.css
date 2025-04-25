@@ -4,8 +4,12 @@
     justify-content: center;
     margin: 200px;
 }*/
+.container{
+    background-color: #08C5D1;
+}
 
 .zones-container {
+
     display: grid;
     grid-template-columns: 1fr 1fr;
     grid-template-rows: 1fr 1fr;

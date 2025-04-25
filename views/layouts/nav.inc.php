@@ -7,7 +7,7 @@
 
 <div class="side-navbar">
     <a href="index.php?page=barmanAccueil">Gestion des tables</a>
-    <button onclick="openModal()">Ajouter une réservation</button>
+    <a href="#" onclick="openModal()">Ajouter une réservation</a>
     <a href="index.php?page=boisson">Boisson</a>
-    <a href="index.php?page=parametre">⚙️</a>
+    <a href="index.php?page=parametre" class="settings-link">⚙️</a>
 </div>

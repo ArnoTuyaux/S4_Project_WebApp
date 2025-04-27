@@ -4,9 +4,9 @@
     <meta charset="UTF-8">
     <title>Boissons</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="css/nav.css?v=5">
-    <link rel="stylesheet" href="css/barmanAccueil.css?v=5">
-    <link rel="stylesheet" href="css/Modale_Barman.css?v=2">
+    <link rel="stylesheet" href="css/nav.css?v=6">
+    <link rel="stylesheet" href="css/barmanAccueil.css?v=6">
+    <link rel="stylesheet" href="css/Modale_Barman.css?v=3">
 </head>
 
 <body class="container">

@@ -6,7 +6,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/nav.css?v=4">
     <link rel="stylesheet" href="css/boissons.css?v=1">
-    <link rel="stylesheet" href="css/Modale_Barman.css?v=3">
+    <link rel="stylesheet" href="css/Modale_Barman.css?v=4">
 </head>
 
 <body>

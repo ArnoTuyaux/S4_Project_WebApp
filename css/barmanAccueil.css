@@ -14,7 +14,6 @@
     margin-right: 20%;
 }
 
-
 .zone {
     position: relative;
     border: none;
@@ -139,4 +138,23 @@
     border: none;
     cursor: pointer;
     white-space: pre-line;
+}
+
+@media screen and (max-width: 820px) {
+    .zones-container {
+        column-gap: 10px;
+        margin-left: 25%;
+        margin-right: 3%;
+    }
+
+    .zone h2 {
+        position: absolute;
+        bottom: 10px;
+        left: 10px;
+        margin: 0;
+        color: white;
+        font-size: 0.8rem;
+        text-align: left;
+    }
+
 }

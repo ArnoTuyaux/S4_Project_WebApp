@@ -1,6 +1,13 @@
-
-<link rel="stylesheet" href="css/nav.css?v=4">
-<link rel="stylesheet" href="css/barmanAccueil.css?v=3">
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Boissons</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/nav.css?v=6">
+    <link rel="stylesheet" href="css/barmanAccueil.css?v=6">
+    <link rel="stylesheet" href="css/Modale_Barman.css?v=3">
+</head>
 
 <body class="container">
 <?php
@@ -125,10 +132,17 @@ if ($tables && is_array($tables)) {
 
         if (commandes.length > 0) {
             let html = "<ul>";
+            let total = 0; // ← on initialise le total
+
             commandes.forEach(function(cmd) {
                 html += "<li>" + cmd.NOM_PLAT + " - " + cmd.PRIX + "€</li>";
+                total += parseFloat(cmd.PRIX); //  additionné chaque prix
             });
+
             html += "</ul>";
+
+            html += "<div class='total-commande'>Total : " + total.toFixed(2) + "€</div>"; // ← on affiche le total
+
             details.innerHTML = html;
         } else {
             details.textContent = "Aucune commande trouvée pour cette table.";
@@ -136,6 +150,7 @@ if ($tables && is_array($tables)) {
 
         modal.style.display = "flex";
     }
+
 
     function afficherModaleReservee(reservations, tableId) {
         const modal = document.getElementById('reserveeModal');
@@ -165,7 +180,7 @@ if ($tables && is_array($tables)) {
             reservations.forEach((res, index) => {
                 const btn = document.createElement('button');
                 btn.textContent = `Nom : ${res.nom_client}\nHoraire : ${res.horaire}`;
-                btn.className = "btn btn-warning";
+                btn.className = "other-reservation-card"; // NOTRE CLASSE CSS PROPRE
                 btn.onclick = () => {
                     current = index;
                     remplirFormulaire(current);
@@ -178,6 +193,7 @@ if ($tables && is_array($tables)) {
             alert("Aucune réservation trouvée pour cette table.");
         }
     }
+
 
     // Bouton “OK” : mise à jour réservation
     document.getElementById('reservationForm').addEventListener('submit', function(e) {

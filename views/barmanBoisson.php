@@ -27,6 +27,7 @@
 
             <div class="boisson-footer">
                 <form method="post" action="controllers/terminer_boisson.php">
+                    <input type="hidden" name="id_table" value="<?= htmlspecialchars($items['id_table'])?>">
                     <input type="hidden" name="ticket_id" value="<?= htmlspecialchars($ticketId) ?>">
                     <button type="submit">Terminé</button>
                 </form>

@@ -23,7 +23,8 @@
 <?php endforeach; ?>
 
 
-<a href="?page=modifier_carte">
+<a href="?page=<?= $type === 'Employes' ? 'modifier_employe' : 'modifier_carte' ?>">
+
 <button class="add">Ajouter</button>
 </a>
 

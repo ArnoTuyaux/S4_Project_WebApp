@@ -113,11 +113,49 @@ WHERE serveur.id_serveur = '$id';";
         return new Employes($row['ID_SERVEUR'], $row['NOM_COMPLET'], $secteurs);
     }
 
-//    private static function updateEmploye($id, $nom, $id_secteur)
-//    {
-//        $db = new Database();
-//        $conn = $db->getConnection();
-//        $query = "UPDATE serveur"
-//    }
+    public static function updateEmploye($id, $nom, $secteurs)
+    {
+        $db = new Database();
+        $conn = $db->getConnection();
+        $query = "UPDATE serveur SET NOM_COMPLET = '$nom' WHERE ID_SERVEUR = '$id'";
+        $db->requete($query);
 
+        $stmt = $conn->prepare("INSERT INTO relier (ID_SECTEUR, ID_SERVEUR, TEMPS) VALUES (:id_secteur, :id_serveur, CURRENT_DATE)");
+        foreach ($secteurs as $secteurId) {
+            $stmt->execute([
+                'id_secteur' => $secteurId,
+                'id_serveur' => $id
+            ]);
+        }
+    return true;
+    }
+
+    public static function createEmploye($nomComplet, $secteurs)
+    {
+        $db = new Database();
+        $conn = $db->getConnection();
+
+        try {
+            $query = "INSERT INTO serveur (NOM_COMPLET, EMPLOYE_ACTIF) VALUES (:nom, 1)";
+            $stmt = $conn->prepare($query);
+            $stmt->execute(['nom' => $nomComplet]);
+
+            $idServeur = $conn->lastInsertId();
+
+            $queryRelier = "INSERT INTO relier (ID_SECTEUR, ID_SERVEUR, TEMPS) VALUES (:id_secteur, :id_serveur, CURRENT_DATE)";
+            $stmtRelier = $conn->prepare($queryRelier);
+
+            foreach ($secteurs as $idSecteur) {
+                $stmtRelier->execute([
+                    'id_secteur' => $idSecteur,
+                    'id_serveur' => $idServeur
+                ]);
+            }
+
+            return true;
+        } catch (PDOException $e) {
+            error_log('Erreur création employé : ' . $e->getMessage());
+            return false;
+        }
+    }
 }

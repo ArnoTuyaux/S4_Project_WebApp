@@ -6,6 +6,6 @@
     <button>Barman</button>
 </a>
 
-<a href="index.php?page=page2">
+<a href="index.php?page=Cuisinier">
     <button>Cuis</button>
 </a>

@@ -13,10 +13,20 @@
             </div>
 
             <div class="boisson-contenu">
-                <?php foreach ($items as $key => $plat): ?>
-                    <?php if ($key === 'id_table') continue; ?>
-                    <p>x1 <?= htmlspecialchars($plat['NOM_PLAT']) ?></p>
-                <p>- <?= htmlspecialchars($plat[''])?></p>
+                <?php foreach ($items['plats'] as $plat): ?>
+                    <p>x1 <?= htmlspecialchars($plat['nom_plat']) ?></p>
+
+                    <?php if (!empty($plat['cuisson'])): ?>
+                        <p>- Cuisson : <?= htmlspecialchars($plat['cuisson']) ?></p>
+                    <?php endif; ?>
+
+                    <?php if (!empty($plat['sauce'])): ?>
+                        <p>- Sauce : <?= htmlspecialchars($plat['sauce']) ?></p>
+                    <?php endif; ?>
+
+                    <?php if (!empty($plat['commentaire'])): ?>
+                        <p>- Commentaire : <?= htmlspecialchars($plat['commentaire']) ?></p>
+                    <?php endif; ?>
                 <?php endforeach; ?>
             </div>
 

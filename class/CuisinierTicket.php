@@ -7,15 +7,7 @@ class CuisinierTicket {
         $db = new Database();
         $conn = $db->getConnection();
 
-        $query = "SELECT TICKET.ID_TICKET,COMMANDE.ID_TABLES AS ID_TABLE, PLAT.ID_PLAT, PLAT.NOM_PLAT, PLAT.PRIX, PLAT.CONTIENT_SAUCE,PLAT.CONTIENT_CUISSON, TYPE_PLATS.TYPE_PLAT
-                FROM TICKET
-                JOIN COMMANDE ON TICKET.ID_COMMANDE = COMMANDE.ID_COMMANDE
-                JOIN ITEM ON TICKET.ID_TICKET = ITEM.ID_TICKET
-                JOIN PLAT ON ITEM.ID_PLAT = PLAT.ID_PLAT
-                JOIN TYPE_PLATS ON PLAT.ID_TYPE_PLATS = TYPE_PLATS.ID_TYPE_PLATS
-                WHERE TYPE_PLATS.ID_TYPE_PLATS != 4  
-                  AND TICKET.TICKET_EN_COURS = TRUE
-                ORDER BY TICKET.ID_TICKET";
+        $query = "SELECT ITEM.COMMENTAIRE, ITEM.ID_ITEM, TICKET.ID_TICKET, COMMANDE.ID_TABLES AS ID_TABLE, PLAT.ID_PLAT, PLAT.NOM_PLAT, PLAT.PRIX, PLAT.CONTIENT_SAUCE, PLAT.CONTIENT_CUISSON, TYPE_PLATS.TYPE_PLAT, CUISSON_VIANDE.CUISSON, SAUCE.NOM FROM TICKET JOIN COMMANDE ON TICKET.ID_COMMANDE = COMMANDE.ID_COMMANDE JOIN ITEM ON TICKET.ID_TICKET = ITEM.ID_TICKET JOIN PLAT ON ITEM.ID_PLAT = PLAT.ID_PLAT JOIN TYPE_PLATS ON PLAT.ID_TYPE_PLATS = TYPE_PLATS.ID_TYPE_PLATS LEFT JOIN CUISSON_VIANDE ON ITEM.ID_CUISSON_VIANDE = CUISSON_VIANDE.ID_CUISSON_VIANDE LEFT JOIN SAUCE ON ITEM.ID_SAUCE = SAUCE.ID_SAUCE WHERE TYPE_PLATS.ID_TYPE_PLATS != 4 AND TICKET.TICKET_EN_COURS = TRUE ORDER BY TICKET.ID_TICKET";
 
         $stmt = $db->requete($query);
 
@@ -28,10 +20,15 @@ class CuisinierTicket {
             if (!isset($result[$ticketId])) {
                 $result[$ticketId] = [
                     'id_table' => $idTable,
+                    'plats' => []
                 ];
             }
-
-            $result[$ticketId][] = $plat->toArray();
+            $result[$ticketId]['plats'][] = [
+                'nom_plat' => $row['NOM_PLAT'],
+                'commentaire' => $row['COMMENTAIRE'],
+                'cuisson' => $row['CUISSON'],
+                'sauce' => $row['NOM'],
+            ];
         }
 
         return $result;

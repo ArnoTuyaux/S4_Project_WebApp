@@ -14,7 +14,6 @@
     margin-right: 20%;
 }
 
-
 .zone {
     position: relative;
     border: none;
@@ -139,4 +138,11 @@
     border: none;
     cursor: pointer;
     white-space: pre-line;
+}
+
+@media screen and (max-width: 768px) {
+    .zones-container {
+        margin-left: 10%;
+        margin-right: 10%;
+    }
 }

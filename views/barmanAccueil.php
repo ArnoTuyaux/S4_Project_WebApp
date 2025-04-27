@@ -1,7 +1,13 @@
-
-<link rel="stylesheet" href="css/nav.css?v=4">
-<link rel="stylesheet" href="css/barmanAccueil.css?v=3">
-<link rel="stylesheet" href="css/Modale_Barman.css?v=2">
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Boissons</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/nav.css?v=5">
+    <link rel="stylesheet" href="css/barmanAccueil.css?v=5">
+    <link rel="stylesheet" href="css/Modale_Barman.css?v=2">
+</head>
 
 <body class="container">
 <?php

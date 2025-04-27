@@ -55,6 +55,21 @@
     padding: 10px;
 }
 
+/* clignotant du css*/
+ .clignotant {
+     animation: clignoter 1s infinite;
+     background-color: black;
+     color: black;
+     border: none;
+ }
+
+@keyframes clignoter {
+    0% { background-color: red; }
+    50% { background-color: #FFBF66; color: red; }
+    100% { background-color: red; }
+}
+
+
 @media screen and (max-width: 820px) {
     .side-navbar {
         padding-top: 8.2%;

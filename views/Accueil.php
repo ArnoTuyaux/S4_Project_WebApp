@@ -13,8 +13,10 @@
     <button>Barman</button>
 </a>
 
-<a href="index.php?page=page2">
-    <button>Cuisine</button>
+
+<a href="index.php?page=Cuisinier">
+    <button>Cuis</button>
+
 </a>
 
 </body>

@@ -13,8 +13,8 @@ switch ($page) {
     case 'barmanAccueil':
         require_once('controllers/barmanAccueil.php');
         break;
-    case 'Cuisnier':
-        require_once('controllers/.php');
+    case 'Cuisinier':
+        require_once('controllers/cuisinierAccueil.php');
         break;
     case 'boisson':
         require_once('controllers/barmanBoisson.php');
